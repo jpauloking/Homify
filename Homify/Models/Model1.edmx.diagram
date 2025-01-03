@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="5d33a8268baf44a9a07b7f55fc4e907c" Name="Diagram1">
+        <EntityTypeShape EntityType="HomifyDBModel.Description" Width="1.5" PointX="5.25" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="HomifyDBModel.Property" Width="1.5" PointX="3" PointY="2.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HomifyDBModel.PropertyImage" Width="1.5" PointX="5.25" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="HomifyDBModel.Rental" Width="1.5" PointX="3" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HomifyDBModel.User" Width="1.5" PointX="0.75" PointY="4.625" IsExpanded="true" />
+        <AssociationConnector Association="HomifyDBModel.FK__Descripti__prope__412EB0B6" ManuallyRouted="false" />
+        <AssociationConnector Association="HomifyDBModel.FK__Propertie__userI__3C69FB99" ManuallyRouted="false" />
+        <AssociationConnector Association="HomifyDBModel.FK__PropertyI__prope__3E52440B" ManuallyRouted="false" />
+        <AssociationConnector Association="HomifyDBModel.FK__Rentals__userId__46E78A0C" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

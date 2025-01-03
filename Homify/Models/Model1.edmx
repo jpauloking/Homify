@@ -1,0 +1,377 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="HomifyDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Description">
+          <Key>
+            <PropertyRef Name="description" />
+          </Key>
+          <Property Name="description" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="propertyId" Type="int" Nullable="false" />
+          <Property Name="landType" Type="nvarchar" MaxLength="50" />
+          <Property Name="size" Type="nvarchar" MaxLength="50" />
+          <Property Name="houseType" Type="nvarchar" MaxLength="50" />
+          <Property Name="bedRooms" Type="int" />
+          <Property Name="parking" Type="nvarchar" MaxLength="50" />
+          <Property Name="bathRooms" Type="int" />
+          <Property Name="YearBuilt" Type="date" />
+          <Property Name="Amentities" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Properties">
+          <Key>
+            <PropertyRef Name="propertyId" />
+          </Key>
+          <Property Name="propertyId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="userId" Type="int" Nullable="false" />
+          <Property Name="price" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="location" Type="nvarchar" MaxLength="255" />
+          <Property Name="status" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="plotNumber" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="PropertyImages">
+          <Key>
+            <PropertyRef Name="imageId" />
+          </Key>
+          <Property Name="imageId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="propertyId" Type="int" Nullable="false" />
+          <Property Name="imagePath" Type="nvarchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Rentals">
+          <Key>
+            <PropertyRef Name="rentalId" />
+          </Key>
+          <Property Name="rentalId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="userId" Type="int" Nullable="false" />
+          <Property Name="clientName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="clientEmail" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="clientContact" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="clientLocation" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="rent" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="billingPeriod" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="due" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="userId" />
+          </Key>
+          <Property Name="userId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="userName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="firstName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="lastName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="passWord" Type="nvarchar" MaxLength="40" Nullable="false" />
+          <Property Name="emailContact" Type="nvarchar" MaxLength="40" Nullable="false" />
+          <Property Name="createdAt" Type="date" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__Descripti__prope__412EB0B6">
+          <End Role="Properties" Type="Self.Properties" Multiplicity="1" />
+          <End Role="Description" Type="Self.Description" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Properties">
+              <PropertyRef Name="propertyId" />
+            </Principal>
+            <Dependent Role="Description">
+              <PropertyRef Name="propertyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Propertie__userI__3C69FB99">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Properties" Type="Self.Properties" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="userId" />
+            </Principal>
+            <Dependent Role="Properties">
+              <PropertyRef Name="userId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PropertyI__prope__3E52440B">
+          <End Role="Properties" Type="Self.Properties" Multiplicity="1" />
+          <End Role="PropertyImages" Type="Self.PropertyImages" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Properties">
+              <PropertyRef Name="propertyId" />
+            </Principal>
+            <Dependent Role="PropertyImages">
+              <PropertyRef Name="propertyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Rentals__userId__46E78A0C">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Rentals" Type="Self.Rentals" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="userId" />
+            </Principal>
+            <Dependent Role="Rentals">
+              <PropertyRef Name="userId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="HomifyDBModelStoreContainer">
+          <EntitySet Name="Description" EntityType="Self.Description" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Properties" EntityType="Self.Properties" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PropertyImages" EntityType="Self.PropertyImages" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Rentals" EntityType="Self.Rentals" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Descripti__prope__412EB0B6" Association="Self.FK__Descripti__prope__412EB0B6">
+            <End Role="Properties" EntitySet="Properties" />
+            <End Role="Description" EntitySet="Description" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Propertie__userI__3C69FB99" Association="Self.FK__Propertie__userI__3C69FB99">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Properties" EntitySet="Properties" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PropertyI__prope__3E52440B" Association="Self.FK__PropertyI__prope__3E52440B">
+            <End Role="Properties" EntitySet="Properties" />
+            <End Role="PropertyImages" EntitySet="PropertyImages" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Rentals__userId__46E78A0C" Association="Self.FK__Rentals__userId__46E78A0C">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Rentals" EntitySet="Rentals" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="HomifyDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Description">
+          <Key>
+            <PropertyRef Name="description1" />
+          </Key>
+          <Property Name="description1" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="propertyId" Type="Int32" Nullable="false" />
+          <Property Name="landType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="size" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="houseType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="bedRooms" Type="Int32" />
+          <Property Name="parking" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="bathRooms" Type="Int32" />
+          <Property Name="YearBuilt" Type="DateTime" Precision="0" />
+          <Property Name="Amentities" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Property" Relationship="Self.FK__Descripti__prope__412EB0B6" FromRole="Description" ToRole="Properties" />
+        </EntityType>
+        <EntityType Name="Property">
+          <Key>
+            <PropertyRef Name="propertyId" />
+          </Key>
+          <Property Name="propertyId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="userId" Type="Int32" Nullable="false" />
+          <Property Name="price" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="location" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="status" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="plotNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Descriptions" Relationship="Self.FK__Descripti__prope__412EB0B6" FromRole="Properties" ToRole="Description" />
+          <NavigationProperty Name="User" Relationship="Self.FK__Propertie__userI__3C69FB99" FromRole="Properties" ToRole="Users" />
+          <NavigationProperty Name="PropertyImages" Relationship="Self.FK__PropertyI__prope__3E52440B" FromRole="Properties" ToRole="PropertyImages" />
+        </EntityType>
+        <EntityType Name="PropertyImage">
+          <Key>
+            <PropertyRef Name="imageId" />
+          </Key>
+          <Property Name="imageId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="propertyId" Type="Int32" Nullable="false" />
+          <Property Name="imagePath" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Property" Relationship="Self.FK__PropertyI__prope__3E52440B" FromRole="PropertyImages" ToRole="Properties" />
+        </EntityType>
+        <EntityType Name="Rental">
+          <Key>
+            <PropertyRef Name="rentalId" />
+          </Key>
+          <Property Name="rentalId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="userId" Type="Int32" Nullable="false" />
+          <Property Name="clientName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="clientEmail" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="clientContact" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="clientLocation" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="rent" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="billingPeriod" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="due" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="User" Relationship="Self.FK__Rentals__userId__46E78A0C" FromRole="Rentals" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="userId" />
+          </Key>
+          <Property Name="userId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="userName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="firstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="lastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="passWord" Type="String" MaxLength="40" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="emailContact" Type="String" MaxLength="40" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="createdAt" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="Properties" Relationship="Self.FK__Propertie__userI__3C69FB99" FromRole="Users" ToRole="Properties" />
+          <NavigationProperty Name="Rentals" Relationship="Self.FK__Rentals__userId__46E78A0C" FromRole="Users" ToRole="Rentals" />
+        </EntityType>
+        <Association Name="FK__Descripti__prope__412EB0B6">
+          <End Role="Properties" Type="Self.Property" Multiplicity="1" />
+          <End Role="Description" Type="Self.Description" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Properties">
+              <PropertyRef Name="propertyId" />
+            </Principal>
+            <Dependent Role="Description">
+              <PropertyRef Name="propertyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Propertie__userI__3C69FB99">
+          <End Role="Users" Type="Self.User" Multiplicity="1" />
+          <End Role="Properties" Type="Self.Property" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="userId" />
+            </Principal>
+            <Dependent Role="Properties">
+              <PropertyRef Name="userId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PropertyI__prope__3E52440B">
+          <End Role="Properties" Type="Self.Property" Multiplicity="1" />
+          <End Role="PropertyImages" Type="Self.PropertyImage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Properties">
+              <PropertyRef Name="propertyId" />
+            </Principal>
+            <Dependent Role="PropertyImages">
+              <PropertyRef Name="propertyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Rentals__userId__46E78A0C">
+          <End Role="Users" Type="Self.User" Multiplicity="1" />
+          <End Role="Rentals" Type="Self.Rental" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="userId" />
+            </Principal>
+            <Dependent Role="Rentals">
+              <PropertyRef Name="userId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="HomifyDBEntities2" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Descriptions" EntityType="Self.Description" />
+          <EntitySet Name="Properties" EntityType="Self.Property" />
+          <EntitySet Name="PropertyImages" EntityType="Self.PropertyImage" />
+          <EntitySet Name="Rentals" EntityType="Self.Rental" />
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <AssociationSet Name="FK__Descripti__prope__412EB0B6" Association="Self.FK__Descripti__prope__412EB0B6">
+            <End Role="Properties" EntitySet="Properties" />
+            <End Role="Description" EntitySet="Descriptions" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Propertie__userI__3C69FB99" Association="Self.FK__Propertie__userI__3C69FB99">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Properties" EntitySet="Properties" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PropertyI__prope__3E52440B" Association="Self.FK__PropertyI__prope__3E52440B">
+            <End Role="Properties" EntitySet="Properties" />
+            <End Role="PropertyImages" EntitySet="PropertyImages" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Rentals__userId__46E78A0C" Association="Self.FK__Rentals__userId__46E78A0C">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Rentals" EntitySet="Rentals" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="HomifyDBModelStoreContainer" CdmEntityContainer="HomifyDBEntities2">
+          <EntitySetMapping Name="Descriptions">
+            <EntityTypeMapping TypeName="HomifyDBModel.Description">
+              <MappingFragment StoreEntitySet="Description">
+                <ScalarProperty Name="description1" ColumnName="description" />
+                <ScalarProperty Name="propertyId" ColumnName="propertyId" />
+                <ScalarProperty Name="landType" ColumnName="landType" />
+                <ScalarProperty Name="size" ColumnName="size" />
+                <ScalarProperty Name="houseType" ColumnName="houseType" />
+                <ScalarProperty Name="bedRooms" ColumnName="bedRooms" />
+                <ScalarProperty Name="parking" ColumnName="parking" />
+                <ScalarProperty Name="bathRooms" ColumnName="bathRooms" />
+                <ScalarProperty Name="YearBuilt" ColumnName="YearBuilt" />
+                <ScalarProperty Name="Amentities" ColumnName="Amentities" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Properties">
+            <EntityTypeMapping TypeName="HomifyDBModel.Property">
+              <MappingFragment StoreEntitySet="Properties">
+                <ScalarProperty Name="propertyId" ColumnName="propertyId" />
+                <ScalarProperty Name="userId" ColumnName="userId" />
+                <ScalarProperty Name="price" ColumnName="price" />
+                <ScalarProperty Name="location" ColumnName="location" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="plotNumber" ColumnName="plotNumber" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PropertyImages">
+            <EntityTypeMapping TypeName="HomifyDBModel.PropertyImage">
+              <MappingFragment StoreEntitySet="PropertyImages">
+                <ScalarProperty Name="imageId" ColumnName="imageId" />
+                <ScalarProperty Name="propertyId" ColumnName="propertyId" />
+                <ScalarProperty Name="imagePath" ColumnName="imagePath" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Rentals">
+            <EntityTypeMapping TypeName="HomifyDBModel.Rental">
+              <MappingFragment StoreEntitySet="Rentals">
+                <ScalarProperty Name="rentalId" ColumnName="rentalId" />
+                <ScalarProperty Name="userId" ColumnName="userId" />
+                <ScalarProperty Name="clientName" ColumnName="clientName" />
+                <ScalarProperty Name="clientEmail" ColumnName="clientEmail" />
+                <ScalarProperty Name="clientContact" ColumnName="clientContact" />
+                <ScalarProperty Name="clientLocation" ColumnName="clientLocation" />
+                <ScalarProperty Name="rent" ColumnName="rent" />
+                <ScalarProperty Name="billingPeriod" ColumnName="billingPeriod" />
+                <ScalarProperty Name="due" ColumnName="due" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="HomifyDBModel.User">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="userId" ColumnName="userId" />
+                <ScalarProperty Name="userName" ColumnName="userName" />
+                <ScalarProperty Name="firstName" ColumnName="firstName" />
+                <ScalarProperty Name="lastName" ColumnName="lastName" />
+                <ScalarProperty Name="passWord" ColumnName="passWord" />
+                <ScalarProperty Name="emailContact" ColumnName="emailContact" />
+                <ScalarProperty Name="createdAt" ColumnName="createdAt" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
